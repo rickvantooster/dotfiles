@@ -1,0 +1,5 @@
+require("rick.set")
+require("rick.packer")
+require("rick.remap")
+require("rick.keymap")
+require("rick.debugger")

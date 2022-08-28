@@ -3,6 +3,8 @@ local Remap = require("rick.keymap")
 local nnoremap = Remap.nnoremap
 local inoremap = Remap.inoremap
 local util = require'lspconfig/util'
+local servers = require("rick.lsp").servers
+local lspconfig = require("lspconfig")
 
 
 
@@ -52,13 +54,16 @@ local function config(_config)
 	}, _config or {})
 end
 
-require("lspconfig").tsserver.setup(config({
-	root_dir = util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git", ".js_dir")
-}))
+-- require("lspconfig").tsserver.setup(config({
+	--root_dir = util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git", ".js_dir")
+--}))
 
 
-require'lspconfig'.intelephense.setup(config())
+-- require'lspconfig'.intelephense.setup(config())
 
-require("lspconfig").rust_analyzer.setup(config())
+-- require("lspconfig").rust_analyzer.setup(config())
 
+for _, server in ipairs(servers) do
+	lspconfig[server].setup(config())
 
+end

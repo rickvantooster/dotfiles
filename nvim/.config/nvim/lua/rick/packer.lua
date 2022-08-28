@@ -31,5 +31,8 @@ vim.cmd [[packadd packer.nvim]]
 	use "rcarriga/nvim-dap-ui"
 	use "theHamsta/nvim-dap-virtual-text"
 	use "nvim-telescope/telescope-dap.nvim"
+	use "williamboman/mason.nvim"
+	use "williamboman/mason-lspconfig.nvim"
+	use "gpanders/editorconfig.nvim"
 
 end)

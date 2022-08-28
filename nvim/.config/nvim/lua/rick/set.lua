@@ -8,7 +8,7 @@ vim.opt.errorbells=false
 
 vim.g.mapleader = " "
 vim.opt.syntax = "on"
-
+vim.opt.termguicolors = true
 
 vim.diagnostic.config({
 	virtual_text = true,

@@ -1,4 +1,4 @@
-local home = os.getenv('HOME')
+local home = os.getenv('DAP_HOME')
 local dap = require("dap")
 
 dap.adapters.node2 = {

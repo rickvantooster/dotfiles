@@ -1,6 +1,6 @@
 local M = {}
 
-servers = {"tsserver", "intelephense", "rust_analyzer", "sumneko_lua", "ltex", "marksman", "taplo", "html", "jsonls"}
+servers = {"tsserver", "intelephense", "rust_analyzer", "sumneko_lua", "ltex", "marksman", "taplo", "html", "jsonls", "jedi_language_server"}
 
 require("mason").setup()
 require("mason-lspconfig").setup({

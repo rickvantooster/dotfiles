@@ -34,15 +34,6 @@ vim.cmd [[packadd packer.nvim]]
 	use "williamboman/mason.nvim"
 	use "williamboman/mason-lspconfig.nvim"
 	use "gpanders/editorconfig.nvim"
-	use {
-		"catppuccin/nvim",
-		as = "catppuccin",
-		config = function()
-				require("catppuccin").setup {
-					flavour = "mocha"
-				}
-				vim.api.nvim_command "colorscheme catppuccin"
-			end
-	}
+	use "folke/tokyonight.nvim"
 
 end)

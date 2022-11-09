@@ -65,6 +65,13 @@ end
 -- require("lspconfig").rust_analyzer.setup(config())
 
 for _, server in ipairs(servers) do
-	lspconfig[server].setup(config())
+	if server == "intelephense" then 
+		lspconfig[server].setup(config({
+			root_dir = util.root_pattern("composer.json", ".git", ".editorconfig", "www", "htdocs")
+		}))
+
+	else
+		lspconfig[server].setup(config())
+	end
 
 end

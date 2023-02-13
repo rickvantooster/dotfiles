@@ -70,6 +70,11 @@ for _, server in ipairs(servers) do
 			root_dir = util.root_pattern("composer.json", ".git", ".editorconfig", "www", "htdocs")
 		}))
 
+	elseif server == "arduino_language_server" then
+		lspconfig[server].setup(config({
+			-- cmd = {"/home/rick/.local/share/nvim/lsp_servers/arduino_language_server/arduino-language-server", "-clangd", "/bin/clangd", "-cli", "/bin/arduino-cli", "-cli-config", "$HOME/.arduino/arduino-cli.yaml", "-fqbn", "arduino:avr:uno"}
+			cmd = "/home/rick/.local/share/nvim/lsp_servers/arduino_language_server/arduino-language-server -clangd /bin/clangd -cli /bin/arduino-cli -cli-config $HOME/.arduino/arduino-cli.yaml -fqbn arduino:avr:uno"}
+		))
 	else
 		lspconfig[server].setup(config())
 	end

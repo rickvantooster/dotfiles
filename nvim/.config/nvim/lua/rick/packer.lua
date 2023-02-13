@@ -35,5 +35,6 @@ vim.cmd [[packadd packer.nvim]]
 	use "williamboman/mason-lspconfig.nvim"
 	use "gpanders/editorconfig.nvim"
 	use "folke/tokyonight.nvim"
+	use "ThePrimeagen/harpoon"
 
 end)

@@ -14,6 +14,8 @@ nnoremap("<leader><F11>", function ()
 
 end)
 
+vim.keymap.set("i", "<C-c>", "<Esc>")
+
 nnoremap("<leader>mf", function ()
 	require("harpoon.mark").add_file()
 end, silent)

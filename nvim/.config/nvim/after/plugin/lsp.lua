@@ -1,82 +1,49 @@
-require("nvim-lsp-installer").setup {}
-local Remap = require("rick.keymap")
-local nnoremap = Remap.nnoremap
-local inoremap = Remap.inoremap
-local util = require'lspconfig/util'
-local servers = require("rick.lsp").servers
-local lspconfig = require("lspconfig")
+local lsp = require("lsp-zero")
+
+lsp.preset("recommended")
+
+lsp.ensure_installed({
+	"lua_ls",
+	"rust_analyzer",
+	"intelephense",
+	"jdtls",
+	"clangd",
+	"arduino_language_server"
 
 
+})
 
 local cmp = require("cmp")
 
-cmp.setup {
-	snippet = {
-		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
-		end
-	},
-	mapping = cmp.mapping.preset.insert({
-		['<C-y>'] = cmp.mapping.confirm({select = true}),
-		["<C-u>"] = cmp.mapping.scroll_docs(-4),
-		["<C-d>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(),
-	}),
-	sources = cmp.config.sources({
-		{name = 'nvim_lsp'},
-		{name = 'vsnip'},
-		{name = 'nvim_lsp_signature_help'},
-		{name = 'path'},
-		{name = 'nvim_lua'},
-	}, {
-		{name = 'buffer'}
-	})
-}
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+
+local cmp_mappings = lsp.defaults.cmp_mappings({
+	['<C-p'] = cmp.mapping.select_prev_item(cmp_select),
+	['<C-n'] = cmp.mapping.select_next_item(cmp_select),
+	['<C-y'] = cmp.mapping.confirm({select = true}),
+	['<C-Space'] = cmp.mapping.complete(),
 
 
-local on_attach = function(client, bufnr)
-	nnoremap("<leader>gd", function() vim.lsp.buf.definition() end)
-	nnoremap("<leader>K", function() vim.lsp.buf.hover() end)
-	nnoremap("<leader>ws", function() vim.lsp.buf.workspace_symbol() end)
-	nnoremap("<leader>of", function() vim.diagnostic.open_float() end)
-	nnoremap("<leader>[d", function() vim.diagnostic.goto_next() end)
-	nnoremap("<leader>]d", function() vim.diagnostic.goto_prev() end)
-	nnoremap("<leader>ca", function() vim.lsp.buf.code_action() end)
-	nnoremap("<leader>fr", function() vim.lsp.buf.references() end)
-	nnoremap("<F2>", function() vim.lsp.buf.rename() end)
-	nnoremap("<leader>sh", function() vim.lsp.buf.signature_help() end)
-end
-	
-local function config(_config)
-	return vim.tbl_deep_extend("force", {
---		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-		capabilities = require("cmp_nvim_lsp").default_capabilities(),
-		on_attach = on_attach
-	}, _config or {})
-end
+})
 
--- require("lspconfig").tsserver.setup(config({
-	--root_dir = util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git", ".js_dir")
---}))
+lsp.setup_nvim_cmp({
+	mapping = cmp_mappings
+})
 
 
--- require'lspconfig'.intelephense.setup(config())
+lsp.on_attach(function(client, bufnr)
+  local opts = {buffer = bufnr, remap = false}
 
--- require("lspconfig").rust_analyzer.setup(config())
+  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+  vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+  vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+  vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+  vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
+  vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+end)
 
-for _, server in ipairs(servers) do
-	if server == "intelephense" then 
-		lspconfig[server].setup(config({
-			root_dir = util.root_pattern("composer.json", ".git", ".editorconfig", "www", "htdocs")
-		}))
-
-	elseif server == "arduino_language_server" then
-		lspconfig[server].setup(config({
-			-- cmd = {"/home/rick/.local/share/nvim/lsp_servers/arduino_language_server/arduino-language-server", "-clangd", "/bin/clangd", "-cli", "/bin/arduino-cli", "-cli-config", "$HOME/.arduino/arduino-cli.yaml", "-fqbn", "arduino:avr:uno"}
-			cmd = "/home/rick/.local/share/nvim/lsp_servers/arduino_language_server/arduino-language-server -clangd /bin/clangd -cli /bin/arduino-cli -cli-config $HOME/.arduino/arduino-cli.yaml -fqbn arduino:avr:uno"}
-		))
-	else
-		lspconfig[server].setup(config())
-	end
-
-end
+lsp.setup()

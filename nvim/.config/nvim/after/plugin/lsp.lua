@@ -25,9 +25,28 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 
 
 })
+--[[
+cmp.setup {
+	sources = cmp.config.sources({
+		{
+			name = "nvim_lsp",
+			entry_filter = function(entry, ctx)
+			return cmp.lsp.CompletionItemKind.Text ~= entry:get_kind()
+            end },
+		
+	})
+	
+}
+--]]
+
 
 lsp.setup_nvim_cmp({
-	mapping = cmp_mappings
+	mapping = cmp_mappings,
+	sources = {
+		{name = 'path'},
+		{name = 'nvim_lsp'},
+		{name = 'luasnip'},
+	}
 })
 
 

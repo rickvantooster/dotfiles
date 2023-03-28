@@ -5,6 +5,7 @@ vim.opt.expandtab = false
 vim.opt.tabstop=8
 vim.opt.shiftwidth=8
 vim.opt.errorbells=false
+vim.opt.wrap = false
 
 vim.g.mapleader = " "
 vim.opt.syntax = "on"

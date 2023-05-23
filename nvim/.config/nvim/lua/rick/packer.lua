@@ -52,5 +52,6 @@ vim.cmd [[packadd packer.nvim]]
 		  {'rafamadriz/friendly-snippets'},
 	  }
   }
+  use "tpope/vim-fugitive"
 
 end)

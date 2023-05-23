@@ -15,7 +15,9 @@ lsp.ensure_installed({
 
 local cmp = require("cmp")
 
+
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
+
 
 local cmp_mappings = lsp.defaults.cmp_mappings({
 	['<C-p'] = cmp.mapping.select_prev_item(cmp_select),
@@ -25,28 +27,17 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 
 
 })
---[[
-cmp.setup {
-	sources = cmp.config.sources({
-		{
-			name = "nvim_lsp",
-			entry_filter = function(entry, ctx)
-			return cmp.lsp.CompletionItemKind.Text ~= entry:get_kind()
-            end },
-		
-	})
-	
-}
---]]
+
+cmp.setup({
+	preselect = 'item',
+	completion = {
+		completeopt = 'menu,menuone,noinsert'
+	},
+})
 
 
 lsp.setup_nvim_cmp({
 	mapping = cmp_mappings,
-	sources = {
-		{name = 'path'},
-		{name = 'nvim_lsp'},
-		{name = 'luasnip'},
-	}
 })
 
 

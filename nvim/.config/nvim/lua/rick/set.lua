@@ -17,3 +17,4 @@ vim.diagnostic.config({
 })
 
 vim.o.spelllang = 'nl'
+--vim.opt.undodir = os.getenv("home") .. "/.vim/undodir"

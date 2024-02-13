@@ -8,8 +8,6 @@ lsp.ensure_installed({
 	"intelephense",
 	"jdtls",
 	"clangd",
-	"arduino_language_server"
-
 
 })
 
@@ -55,5 +53,16 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+require('arduino').setup {
+	default_fqbn = 'arduino:avr:uno',
+	clangd = require 'mason-core.path'.bin_prefix 'clangd',
+	arduino = '/home/rick/local/bin/arduino-cli',
+}
+require('lspconfig').arduino_language_server.setup {
+	on_new_config = require('arduino').on_new_config,
+
+}
+
 
 lsp.setup()

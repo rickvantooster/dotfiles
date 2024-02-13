@@ -15,6 +15,7 @@ vim.cmd [[packadd packer.nvim]]
 	use("nvim-treesitter/nvim-treesitter", {
 		run = ":TSUpdate"
 	})
+	use 'nvim-treesitter/nvim-treesitter-context'
 	use "ThePrimeagen/harpoon"
 	use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
 
@@ -41,7 +42,7 @@ vim.cmd [[packadd packer.nvim]]
 
 		  -- Autocompletion
 		  {'hrsh7th/nvim-cmp'},
-		  -- {'hrsh7th/cmp-buffer'},
+		  {'hrsh7th/cmp-buffer'},
 		  {'hrsh7th/cmp-path'},
 		  {'saadparwaiz1/cmp_luasnip'},
 		  {'hrsh7th/cmp-nvim-lsp'},
@@ -53,5 +54,6 @@ vim.cmd [[packadd packer.nvim]]
 	  }
   }
   use "tpope/vim-fugitive"
+  use 'edKotinsky/Arduino.nvim'
 
 end)
